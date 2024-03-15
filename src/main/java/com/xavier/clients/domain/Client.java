@@ -10,7 +10,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
+    private String name;
     private String cpf;
     private Double income;
     private LocalDate birthDate;
@@ -20,21 +20,21 @@ public class Client {
 
     }
 
-    public Client(Long id, String nome, String cpf, Double income, LocalDate birthDate, Integer children) {
+    public Client(Long id, String name, String cpf, Double income, LocalDate birthDate, Integer children) {
         this.id = id;
-        this.nome = nome;
+        this.name = name;
         this.cpf = cpf;
         this.income = income;
         this.birthDate = birthDate;
         this.children = children;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCpf() {
