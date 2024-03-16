@@ -6,6 +6,7 @@ import com.xavier.clients.repository.ClientRepository;
 import com.xavier.clients.service.exception.ResouceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ClientService {
@@ -13,7 +14,8 @@ public class ClientService {
     @Autowired
     private ClientRepository repository;
 
-    public ClientDTO findById(Long id) {
+   @Transactional(readOnly = true)
+   public ClientDTO findById(Long id) {
         Client client = repository.findById(id).orElseThrow(
                 ()-> new ResouceNotFoundException("Recurso não encontrado"));
         return new ClientDTO(client);
