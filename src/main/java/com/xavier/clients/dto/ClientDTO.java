@@ -1,6 +1,7 @@
 package com.xavier.clients.dto;
 
 import com.xavier.clients.domain.Client;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import org.hibernate.validator.constraints.br.CPF;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 
 public class ClientDTO {
     private Long id;
-    @NotNull(message = "O campo nome não pode ser nulo")
+   @NotBlank(message = "O campo nome não pode ser nulo")
     private String name;
     @CPF(message = "CPF invalido")
     private String cpf;
