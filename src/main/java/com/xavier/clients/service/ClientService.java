@@ -3,12 +3,15 @@ package com.xavier.clients.service;
 import com.xavier.clients.domain.Client;
 import com.xavier.clients.dto.ClientDTO;
 import com.xavier.clients.repository.ClientRepository;
+import com.xavier.clients.service.exception.DataBaseException;
 import com.xavier.clients.service.exception.ResouceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -51,6 +54,19 @@ public class ClientService {
        }
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void delete(Long id) {
+        if(!repository.existsById(id)){
+            throw new ResouceNotFoundException("Recurso não encontrado");
+        }
+        try{
+            repository.deleteById(id);
+        }
+        catch (DataIntegrityViolationException e){
+            throw new DataBaseException("Falha de integridade referencial");
+        }
+    }
+
     private void copyDtoEntity(ClientDTO dto, Client entity){
         entity.setName(dto.getName());
         entity.setCpf(dto.getCpf());
@@ -58,4 +74,5 @@ public class ClientService {
         entity.setIncome(dto.getIncome());
         entity.setBirthDate(dto.getBirthDate());
     }
+
 }
